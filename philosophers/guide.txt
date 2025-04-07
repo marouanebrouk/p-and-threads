@@ -1,0 +1,10 @@
+threads run the same time , (one can read in a file and one can write inside the file at the same time)
+mutex sleep a thread in order to allow other threads to do its work.
+
+p_thread join wait for the thread to finsh and clean eventually.
+
+3 800 200 200 number of philo (800 time to die if no eat no sleep) , (200 time to)
+
+mutex used for threads, while semaphores used for processes.
+
+mutex is forbiden in b part
