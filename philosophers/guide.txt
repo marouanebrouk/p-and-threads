@@ -7,4 +7,4 @@ p_thread join wait for the thread to finsh and clean eventually.
 
 mutex used for threads, while semaphores used for processes.
 
-mutex is forbiden in b part
+mutex is forbiden in b part. (use semaphores instead with processes)

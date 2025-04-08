@@ -1,9 +1,6 @@
-#include "stdio.h"
-#include "unistd.h"
-#include "stdlib.h"
-#include "pthread.h"
+#include "philo.h"
 
-typedef struct f_threads
+typedef struct s_threads
 {
     int number;
     char *name;
@@ -13,7 +10,6 @@ void *my_thread(void *arg)
 {
     t_threads *data = (t_threads *)arg;
     printf("pid si %d\n",getpid());
-    printf("pid si %lld\n",pthread_self());
     sleep(2);
     printf("bye %d thread\n",data->number);
     printf("bye %s thread\n",(*data).name);
