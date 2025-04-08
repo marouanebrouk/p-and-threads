@@ -1,14 +1,9 @@
 #include "philo.h"
 
-typedef struct s_threads
-{
-    int number;
-    char *name;
-} t_threads;
 
 void *my_thread(void *arg)
 {
-    t_threads *data = (t_threads *)arg;
+    t_data *data = (t_data *)arg;
     printf("pid si %d\n",getpid());
     sleep(2);
     printf("bye %d thread\n",data->number);
@@ -18,7 +13,7 @@ void *my_thread(void *arg)
 int main()
 {
     pthread_t t1, t2;
-    t_threads data;
+    t_data data;
     data.number = 100;
     data.name = "marouane";
     

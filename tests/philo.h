@@ -9,4 +9,11 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
+
+typedef struct s_data
+{
+    int number;
+    char *name;
+} t_data;
+
 #endif
