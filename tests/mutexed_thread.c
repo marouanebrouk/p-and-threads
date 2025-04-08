@@ -5,14 +5,15 @@ pthread_mutex_t mutex;
 void *routine(void *arg)
 {
     t_data *data = (t_data *)arg;
-    int i = 0;
-    while (i < 10000000)
+    long i = 0;
+    while (i < 1000000000)
     {
         pthread_mutex_lock(&mutex);
         data->number++;
         pthread_mutex_unlock(&mutex);
         i++;
     }
+    printf("%s\n",data->name);
 }
 
 int main()
@@ -30,5 +31,5 @@ int main()
     pthread_join(t1,NULL);
     pthread_join(t2,NULL);
     pthread_mutex_destroy(&mutex);
-    printf("%d\n",mero.number);
+    printf("%lld\n",mero.number);
 }

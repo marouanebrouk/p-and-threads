@@ -12,7 +12,7 @@
 
 typedef struct s_data
 {
-    int number;
+    long long number;
     char *name;
 } t_data;
 
