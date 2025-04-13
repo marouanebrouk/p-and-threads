@@ -24,7 +24,7 @@ t_data data;
 // data = malloc(sizeof(t_data));
 pthread_t t1,t2;
 
-data.number = 42;
+data.number = 0;
 data.name = "marouane";
 pthread_create(&t1,NULL,ft_routine,(void *)&data);
 pthread_create(&t2,NULL,ft_routine,(void *)&data);
