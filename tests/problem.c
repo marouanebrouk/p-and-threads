@@ -1,29 +1,33 @@
 #include "philo.h"
+int arr[]={2,3,5,7,11,13,17,19,23,29};
 
-void *routine(void * arg)
+void *routine(void *arg)
 {
-    int index = *(int *)arg;
-    printf("%d\n",index);
+    int *d = (int *)arg;
+    printf("%d\n",arr[*d]);
+    free(d);
+    return (NULL);
 }
 
 int main()
 {
-int arr[] = {2,3,5,7,11,13,17,19,23,29};
+
     pthread_t t[10];
     int i = 0;
     while (i < 10)
     {
-        if(pthread_create(&t[i],NULL,routine,(void *)&arr[i]) != 0)
+        int *d = malloc(sizeof(int));
+        *d = i;
+        if (pthread_create(&t[i],NULL,&routine,(void *)d) != 0)
             perror("failed to create thread\n");
-        usleep(500);
+        usleep(100000);
         i++;
     }
-    int j = 0;
-    while(j < 10)
+    i = 0;
+    while (i < 10)
     {
-            if(pthread_join(t[j],NULL) != 0)
-                perror("failed to join thread\n");
-            j++;
+        if (pthread_join(t[i],NULL) != 0)
+            perror("failed to join thread");
+        i++;
     }
-    return 0;
 }
