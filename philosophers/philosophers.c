@@ -19,7 +19,7 @@ int ft_atoi(char *str)
 }
 
 
-int main()
+int main(int ac, char **av)
 {
-
+    
 }

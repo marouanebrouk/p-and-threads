@@ -24,5 +24,71 @@ void *roll_dice()
     return ((void *)result);  <--- where we send the value to pthread_join;
 }
     int *res;
-    if(pthread_join(t1,(void**)&res) != 0) <--- here we assign the value returned to the variable we want.
+    if(pthread_join(t1,(void**)&res) != 0) <--- here we assign the value returned to the variable we want (res).
 ------------------------------------------------------------------------------------------
+
+
+COMMON ISSUES IN MULTITHREADING------------
+
+-------
+RACE condition : issue occurs when multiple threads try to access a shared resource at the same time and the output depends on the order of the execution of those threads.
+This issue can lead to unpredictable behavior of the program and cause the program to generate different results each time when it is executed.
+
+Example:
+If two threads try to acess a shared counter variable where both are trying to change the vale based on the current value, then the program may not generate the
+expected result because both threads may read and write the counter at the same time.
+------
+DEADLOCK condition :  arises when multiple threads are blocked forever as they are waiting for each other to release the occupied resource.
+It generally arises in situations where thread acquire some resources initially and request for more resources midway during their execution.
+(deadlock happens (where all philosophers pick up one fork and wait forever))
+------
+STARVATION condition : This situation commonly occurs with priority-based scheduling algorithms when they are biased toward certain threads
+
+Example: A thread with low priority will have to wait indefinitely as higher priority threads are continuously available.
+-------
+
+
+End
+
+
+
+
+
+
+What Is the Philosophers Problem?
+Imagine a table with a bunch of philosophers sitting around it.
+Each philosopher can:
+
+Think
+
+Eat
+
+Sleep
+
+There are forks placed between each pair of philosophers.
+To eat, a philosopher needs both the fork to their left and the one to their right.
+If both are not available, the philosopher waits.
+
+The challenge is to manage these philosophers (as concurrent threads) so that:
+
+No philosopher starves.
+
+No deadlock happens (where all philosophers pick up one fork and wait forever).
+
+Access to forks (shared resources) is safely managed via mutexes.
+
+
+
+
+Mutexes :   (Mutual Exclusion Objects) are used to protect access to shared resources (forks).
+Only one thread can hold a mutex at a time.
+
+Race Conditions
+When multiple threads access shared data at the same time without proper synchronization — causing unpredictable results
+
+
+Deadlocks
+A situation where a group of threads are waiting on each other in a way that none can proceed.
+
+Example:
+If every philosopher picks up the fork to their left at the same time, they all wait forever for the right fork.

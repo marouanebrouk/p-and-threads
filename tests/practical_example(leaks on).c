@@ -1,7 +1,6 @@
 #include "philo.h"
 int arr[]={2,3,5,7,11,13,17,19,23,29};
 int gsum = 0;
-// pthread_mutex_t mutex;
 
 void *routine(void *arg)
 {
@@ -10,10 +9,8 @@ void *routine(void *arg)
     int index = *(int *)arg;
     while (i < 5)
     {
-        // pthread_mutex_lock(&mutex);
         sum = sum + arr[(index) + i];
         i++;
-        // pthread_mutex_unlock(&mutex);
     }
     printf("local sum is %d\n",sum);
     *(int *)arg = sum;
@@ -42,7 +39,6 @@ int main()
             perror("error joining the thread\n");
         i++;
         gsum += *res;
-        // printf("gsum is %d\n",gsum);
     }
     printf("%d\n",gsum);
 }
