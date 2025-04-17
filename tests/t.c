@@ -27,37 +27,83 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdint.h>
-#define BIG 1000000000UL
+#define BIG 1000000000
+#include <unistd.h>
+#include <stdio.h>
+#include <pthread.h>
 
-typedef  struct s_utils
+// the initial balance is 0
+int balance = 0;
+
+// write the new balance (after as simulated 1/4 second delay)
+void write_balance(int new_balance)
 {
-    uint32_t a;
-    pthread_mutex_t mutex;
-} t_utils;
+  usleep(250000);
+  balance = new_balance;
+}
 
-
-void *change_a(void *arg)
+// returns the balance (after a simulated 1/4 seond delay)
+int read_balance()
 {
- uint32_t *a = (uint32_t *)arg;
- for(uint32_t i = 0; i < BIG; i++)
- {
-     pthread_mutex_lock(&mutex);
-     (*a)++;
-     pthread_mutex_unlock(mutex);
- }
- return (NULL);
+  usleep(250000);
+  return balance;
+}
+
+// carry out a deposit
+void* deposit(void *amount)
+{
+  // lock the mutex
+  pthread_mutex_lock(&mutex);
+
+  // retrieve the bank balance
+  int account_balance = read_balance();
+
+  // make the update locally
+  account_balance += *((int *) amount);
+
+  // write the new bank balance
+  write_balance(account_balance);
+
+  // unlock to make the critical section available to other threads
+  pthread_mutex_unlock(&mutex);
+
+  return NULL;
 }
 
 int main()
 {
- pthread_t thread_1;
- pthread_t thread_2;
- uint32_t a;
+  // mutex variable
+  pthread_mutex_t mutex;
 
- a = 0;
- pthread_create(&thread_1, NULL, change_a, &a);
- pthread_create(&thread_2, NULL, change_a, &a);
- pthread_join(thread_1, NULL);
- pthread_join(thread_2, NULL);
- printf("a is: %u\n", a);
+  // output the balance before the deposits
+  int before = read_balance();
+  printf("Before: %d\n", before);
+
+  // we'll create two threads to conduct a deposit using the deposit function
+  pthread_t thread1;
+  pthread_t thread2;
+
+  // initialize the mutex
+  pthread_mutex_init(&mutex, NULL);
+
+  // the deposit amounts... the correct total afterwards should be 500
+  int deposit1 = 300;
+  int deposit2 = 200;
+
+  // create threads to run the deposit function with these deposit amounts
+  pthread_create(&thread1, NULL, deposit, (void*) &deposit1);
+  pthread_create(&thread2, NULL, deposit, (void*) &deposit2);
+
+  // join the threads
+  pthread_join(thread1, NULL);
+  pthread_join(thread2, NULL);
+
+   // destroy the mutex
+  pthread_mutex_destroy(&mutex);
+
+  // output the balance after the deposits
+  int after = read_balance();
+  printf("After: %d\n", after);
+
+  return 0;
 }

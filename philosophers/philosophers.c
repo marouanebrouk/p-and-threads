@@ -1,25 +1,19 @@
 #include "philosophers.h"
 
-
-int ft_atoi(char *str)
-{
-    int sign;
-    int result;
-
-    sign = 1;
-    result = 0;
-    while ((*str >= 9 && *str <= 13 ) || *str == 32)
-        str++;
-    if (*str == '-' || *str == '+' )
-        if (*(str++) == '-')
-            sign = -1;
-    while (*str >= '0' && *str <= '9')
-        result = result * 10 + (*str++ - '0');
-    return(result * sign);
-}
-
-
 int main(int ac, char **av)
 {
-    
+    if (ac == 5 || ac == 6)
+    {
+        ft_atoi(av[1]);
+        ft_atoi(av[2]);
+        ft_atoi(av[3]);
+        ft_atoi(av[4]);
+        if(ac == 6)
+            ft_atoi(av[5]);
+    }
+    else
+    {
+        write(1,"Arguments not correct !\n",24);
+        exit(1);
+    }
 }
