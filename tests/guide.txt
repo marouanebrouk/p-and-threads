@@ -12,6 +12,25 @@ mutex is forbiden in b part. (use semaphores instead with processes)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+You use pthread_join to:
+
+Wait for a thread to finish
+
+Prevent your program from exiting too early
+
+Ensure proper cleanup and synchronization
 ------------------------------------------------------------------------------------------
 pthread_join can make it easy for you to get a returned value from the thread routine function; example
 

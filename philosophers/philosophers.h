@@ -19,10 +19,14 @@ typedef struct s_conditions
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
+    int dead_flag;
+    pthread_mutex_t dead;
+    pthread_mutex_t meal;
+    pthread_mutex_t write;
 }t_condition;
 
 
-int ft_atoi(char *str);
+int	is_valid_args(int ac, char **av);
 
 
 #endif
