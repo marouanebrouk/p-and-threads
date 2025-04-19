@@ -31,7 +31,7 @@ static int ft_atoi(char *str)
     return(result * sign);
 }
 
-int	is_valid_args(int ac, char **av)
+int	ft_is_valid_args(int ac, char **av)
 {
 	int	i;
 
