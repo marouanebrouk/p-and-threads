@@ -3,6 +3,7 @@
         "philo.h": "c",
         "stdio.h": "c",
         "unistd.h": "c",
-        "philosophers.h": "c"
+        "philosophers.h": "c",
+        "h.h": "c"
     }
 }
