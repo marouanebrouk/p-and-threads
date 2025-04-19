@@ -20,11 +20,11 @@ typedef struct s_philo
 
 typedef struct s_rules
 {
-    int             nb_philo;
+    int             philo_nb;
     int             time_to_die;
     int             time_to_eat;
     int             time_to_sleep;
-    int             meals_required;
+    int             meals_nb;
     long long       start_time;
     pthread_mutex_t *forks;
     pthread_mutex_t print;
