@@ -1,3 +1,4 @@
+
 #include "philosophers.h"
 
 static int	ft_is_digit(char *str)
@@ -14,7 +15,7 @@ static int	ft_is_digit(char *str)
 	return (1);
 }
 
-static int ft_atoi(char *str)
+int ft_atoi(char *str)
 {
     int sign;
     int result;

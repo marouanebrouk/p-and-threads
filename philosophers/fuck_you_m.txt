@@ -16,3 +16,15 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+
+
+What we did:
+
+Initialized philosopher structs with IDs, fork pointers, and rules
+
+Created a thread per philosopher
+
+Launched them with a routine()
+
+Waited for them with pthread_join

@@ -7,6 +7,8 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+typedef struct s_rules t_rules;
+
 typedef struct s_philo
 {
     int             id;
@@ -31,6 +33,9 @@ typedef struct s_rules
 
 int     ft_is_valid_args(int ac, char **av);
 int	ft_init_rules(t_rules *rules, int ac, char **av);
+int ft_atoi(char *str);
+int	ft_init_philosophers(t_rules *rules);
+void	*ft_routine(void *arg);
 
 
 
