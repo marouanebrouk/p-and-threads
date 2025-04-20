@@ -1,23 +1,6 @@
 #include "philosophers.h"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int	ft_init_rules(t_rules *rules, int ac, char **av)
 {
 	int	i;
