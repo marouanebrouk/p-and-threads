@@ -4,6 +4,8 @@
         "stdio.h": "c",
         "unistd.h": "c",
         "philosophers.h": "c",
-        "h.h": "c"
+        "h.h": "c",
+        "time.h": "c",
+        "stdlib.h": "c"
     }
 }
