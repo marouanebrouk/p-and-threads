@@ -1,5 +1,13 @@
 #include "philosophers.h"
 
+void	*ft_routine(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	printf("Philosopher %d is starting\n", philo->id);
+	return (NULL);
+}
 
 int	ft_init_rules(t_rules *rules, int ac, char **av)
 {
@@ -43,14 +51,4 @@ int	ft_init_philosophers(t_rules *rules)
 		rules->philos[i].rules = rules;
 	}
 	return (1);
-}
-
-
-void	*ft_routine(void *arg)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	printf("Philosopher %d is starting\n", philo->id);
-	return (NULL);
 }
