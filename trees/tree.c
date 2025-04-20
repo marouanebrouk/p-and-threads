@@ -58,13 +58,13 @@ int main() {
   insertRight(root->left,5);
   insertRight(root->right,10);
   printf("Inorder traversal \n");
-  inorderTraversal(root); //4-2-5-1-3
+  inorderTraversal(root); //4-2-5-1-3-10 (infix traversal)
   printf("\n");
   printf("Preorder traversal \n");
-  preorderTraversal(root); // 1-2-4-5-3
+  preorderTraversal(root); // 1-2-4-5-3-10 (prefix traversal)
   printf("\n");
   
   printf("Postorder traversal \n");
-  postorderTraversal(root); // 4-5-2-3-1
+  postorderTraversal(root); // 4-5-2-10-3-1 (suffix traversal)
   printf("\n");
 }

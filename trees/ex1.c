@@ -1,6 +1,6 @@
 #include "h.h"
 
-t_tree *btree_create_node(int item)
+t_tree *btree_create_node(void *item)
 {
     (void)item;
     t_tree *node = malloc(sizeof(t_tree));
