@@ -90,7 +90,7 @@ void	*ft_routine(void *arg)
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 
-
+		
 		print_action(philo, "is sleeping");
 		usleep(philo->rules->time_to_sleep * 1000);
 	}
