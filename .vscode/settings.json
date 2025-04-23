@@ -6,6 +6,8 @@
         "philosophers.h": "c",
         "h.h": "c",
         "time.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "fcntl.h": "c",
+        "types.h": "c"
     }
 }
