@@ -34,7 +34,10 @@ void	run_command(char *input)
 		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0) // Parent
+	{
+		// printf("%d \n",pid);
 		wait(NULL);
+	}
 	else
 		perror("fork");
 }

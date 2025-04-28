@@ -11,7 +11,7 @@ int main(void)
 	int pid;
 	pipe(fds);
 
-	pid = fork(); //hadi fork for the child process li a texecuta fih ls
+	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
@@ -27,7 +27,7 @@ int main(void)
 		perror("execv");
 		exit(1);
 	}
-	int pid2 = fork(); //hadi fork for the second child process li a texecuta fih grep "42"
+	int pid2 = fork();
 	if (pid2 == -1)
 	{
 		perror("fork");
