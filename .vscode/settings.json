@@ -8,6 +8,7 @@
         "time.h": "c",
         "stdlib.h": "c",
         "fcntl.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "atomic": "c"
     }
 }

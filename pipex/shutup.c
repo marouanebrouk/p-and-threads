@@ -14,8 +14,9 @@ void	run_command(char *input)
 	int		i = 0;
 	pid_t	pid;
 
-	// Split input into arguments
+	// Split input to	 arguments
 	token = strtok(input, " \t\n");
+	printf("%s \n",token);
 	while (token && i < MAX_ARGS - 1)
 	{
 		args[i++] = token;
@@ -27,13 +28,13 @@ void	run_command(char *input)
 		return ;
 
 	pid = fork();
-	if (pid == 0) // Child
+	if (pid == 0) 
 	{
 		execvp(args[0], args);
 		perror("execvp");
 		exit(EXIT_FAILURE);
 	}
-	else if (pid > 0) // Parent
+	else if (pid > 0) 
 	{
 		// printf("%d \n",pid);
 		wait(NULL);

@@ -148,7 +148,7 @@ int main(int ac, char **av, char *envp[])
         j++;
     }
     j = 0;
-    while (splited[j])
+    while (splited[j]) 
     {
         if (access(splited[j],F_OK | X_OK) == 0)
             break;
@@ -165,15 +165,3 @@ int main(int ac, char **av, char *envp[])
 	printf("hello execv\n");
 }
 
-
-
-// #include <unistd.h>
-
-// int main(void)
-// {
-//     char *args[] = {"pwd", NULL, NULL};
-//     char *env[] = {NULL};
-
-//     execve("/bin/pwd", args, env);
-//     return (0); // this line only runs if execve fails
-// }
