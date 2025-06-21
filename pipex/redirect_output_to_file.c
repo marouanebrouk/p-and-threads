@@ -13,7 +13,7 @@ int main()
     int pid = fork();
     if (pid == 0)
     {
-        int fd = open("file.txt", O_CREAT | O_WRONLY, 0677);
+        int fd = open("file.txt", O_CREAT | O_WRONLY | O_APPEND, 0677);
         dup2(fd,1);
         execve("/bin/echo",av,environ);
     }
