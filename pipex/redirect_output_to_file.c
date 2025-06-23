@@ -19,3 +19,4 @@ int main()
     }
     wait(NULL);
 }
+// ls | pwd | cat | pwd | cat | pwd | cat | wc -l | wc -w | wc -l | cat /dev/random | head -n 5| wc -l | a

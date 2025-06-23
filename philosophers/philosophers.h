@@ -42,7 +42,6 @@ void	*ft_routine(void *arg);
 void	print_action(t_philo *philo, char *action);
 long long	timestamp(void);
 
-int printf(const char *format, ...);
 
 
 #endif
