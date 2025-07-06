@@ -49,11 +49,12 @@ int main()
         dup2(pipe2[1],STDOUT_FILENO);
         close(pipe2[1]);
 
-        char *av[] = {"grep","pipe.c",NULL};
+        char *av[] = {"grep","file.txt",NULL};
         execv("/bin/grep",av);
         perror("execv2");
         exit(1);
     }
+    /*
     pid3 = fork();
     if (pid3 == 0)
     {
@@ -67,7 +68,7 @@ int main()
         execv("/bin/wc",av);
         perror("execv3");
         exit(1);
-    }
+    }*/
     close(pipe1[0]);
     close(pipe1[1]);
     close(pipe2[0]);
