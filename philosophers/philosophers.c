@@ -1,7 +1,5 @@
 #include "philosophers.h"
 
-
-
 void	print_action(t_philo *philo, char *action)
 {
 	pthread_mutex_lock(&philo->rules->print);
@@ -20,8 +18,6 @@ long long	timestamp(void)
 }
 
 
-
-
 int	ft_init_rules(t_rules *rules, int ac, char **av)
 {
 	int	i;
@@ -33,10 +29,10 @@ int	ft_init_rules(t_rules *rules, int ac, char **av)
 	rules->time_to_sleep = ft_atoi(av[4]);
 	rules->meals_nb = -1;
 	if (ac == 6)
-	rules->meals_nb = ft_atoi(av[5]);
+		rules->meals_nb = ft_atoi(av[5]);
 	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->philo_nb);
 	if (!rules->forks)
-	return (0);
+		return (0);
     while (++i < rules->philo_nb)
     {
 		if (pthread_mutex_init(&rules->forks[i], NULL) != 0)
@@ -71,26 +67,17 @@ void	*ft_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (1337)
+	while (42)
 	{
-		
 		print_action(philo, "is thinking");
-
-		
 		pthread_mutex_lock(philo->left_fork);
 		print_action(philo, "has taken a fork");
-
 		pthread_mutex_lock(philo->right_fork);
 		print_action(philo, "has taken a fork");
-
 		print_action(philo, "is eating");
 		usleep(philo->rules->time_to_eat * 1000);
-
-
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
-
-		
 		print_action(philo, "is sleeping");
 		usleep(philo->rules->time_to_sleep * 1000);
 	}

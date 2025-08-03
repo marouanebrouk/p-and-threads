@@ -15,7 +15,7 @@ void *thread1(void *arg)
     if (!data->msg)
         return NULL;
 
-    sprintf(data->msg, "Hello from thread 1 (allocated on heap)!");
+    data->msg = "Hello from thread 1 (allocated on heap)!";
     return NULL;
 }
 
@@ -27,6 +27,7 @@ void *thread2(void *arg)
     sleep(1);
 
     printf("Thread 2 read: %s\n", data->msg);
+    free(data->msg);
 
     return NULL;
 }
@@ -43,6 +44,6 @@ int main()
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
 
-    free(shared_data.msg);
+    // free(shared_data.msg);
     return 0;
 }

@@ -6,7 +6,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
-
+#include <stdio.h>
 
 
 typedef struct s_rules t_rules;
@@ -30,6 +30,7 @@ typedef struct s_rules
     long long       start_time;
     pthread_mutex_t *forks;
     pthread_mutex_t print;
+    pthread_mutex_t meals_to_eat;
     t_philo         *philos;
 }   t_rules;
 int     ft_is_valid_args(int ac, char **av);

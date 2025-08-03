@@ -16,6 +16,9 @@ void *ft_routine(void *arg)
     return (NULL);
 }
 
+//0 +1 = 1
+//0 +1 = 2
+
 int main()
 {
 pthread_mutex_init(&mutex,NULL);
