@@ -37,15 +37,15 @@ typedef struct s_data
     t_philo         *philos;
 }   t_data;
 
-int     ft_is_valid_args(int ac, char **av);
-int	ft_init_data(t_data *data, int ac, char **av);
-int ft_atoi(char *str);
-int	ft_init_philosophers(t_data *data);
-void	*ft_routine(void *arg);
+// int     ft_is_valid_args(int ac, char **av);
+// int	ft_init_data(t_data *data, int ac, char **av);
+// int ft_atoi(char *str);
+// int	ft_init_philosophers(t_data *data);
+// void	*ft_routine(void *arg);
 
-void	print_action(t_philo *philo, char *action);
-long long	timestamp(void);
-long long	gtime_ms(void);
+// void	print_action(t_philo *philo, char *action);
+// long long	timestamp(void);
+// long long	gtime_ms(void);
 
 
 

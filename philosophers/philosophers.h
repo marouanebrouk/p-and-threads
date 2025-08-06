@@ -13,9 +13,9 @@ typedef struct s_data t_data;
 typedef struct s_philo
 {
     int             id;
+    pthread_t       thread;
     int             meals_eaten;
     long long       last_meal_time;
-    pthread_t       thread;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     pthread_mutex_t meal_lock;
@@ -37,15 +37,21 @@ typedef struct s_data
     t_philo         *philos;
 }   t_data;
 
-int     ft_is_valid_args(int ac, char **av);
+int     ft_isnot_valid_args(int ac, char **av);
 int	ft_init_data(t_data *data, int ac, char **av);
 int ft_atoi(char *str);
 int	ft_init_philosophers(t_data *data);
 void	*ft_routine(void *arg);
 
 void	print_action(t_philo *philo, char *action);
-long long	timestamp(void);
 long long	gtime_ms(void);
+
+void	cleanup(t_data *data);
+int	init_all(t_data *data, int argc, char **argv);
+int	init_philos(t_data *data);
+int	init_mutexes(t_data *data);
+int thread_creation(t_data * data);
+
 
 
 

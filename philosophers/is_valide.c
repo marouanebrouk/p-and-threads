@@ -32,23 +32,24 @@ int ft_atoi(char *str)
     return(result * sign);
 }
 
-int	ft_is_valid_args(int ac, char **av)
+int	ft_isnot_valid_args(int ac, char **av)
 {
 	int	i;
 
-    i = 0;
+    i = 1;
 	if (ac != 5 && ac != 6)
 	{
 		write(2, "Error: wrong number of arguments\n", 33);
-		return (0);
+		return (1);
 	}
-	while (++i < ac)
+	while (i < ac)
 	{
 		if (!ft_is_digit(av[i]) || ft_atoi(av[i]) <= 0)
 		{
 			write(2, "Error: invalid argument value\n", 30);
-			return (0);
+			return (1);
 		}
+		i++;
 	}
-	return (1);
+	return (0);
 }
