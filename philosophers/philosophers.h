@@ -44,13 +44,18 @@ int	ft_init_philosophers(t_data *data);
 void	*ft_routine(void *arg);
 
 void	print_action(t_philo *philo, char *action);
-long long	gtime_ms(void);
+long long	get_current_time_ms(void);
 
 void	cleanup(t_data *data);
 int	init_all(t_data *data, int argc, char **argv);
 int	init_philos(t_data *data);
 int	init_mutexes(t_data *data);
 int thread_creation(t_data * data);
+void	print_action(t_philo *philo, char *msg);
+void	take_forks(t_philo *philo);
+void	eat(t_philo *philo);
+
+
 
 
 

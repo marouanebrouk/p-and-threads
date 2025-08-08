@@ -62,7 +62,7 @@ int	init_all(t_data *data, int argc, char **argv)
 	if (argc == 6)
 		data->meals_nb = ft_atoi(argv[5]);
 	data->someone_died = 0;
-	data->start_time = gtime_ms();
+	data->start_time = get_current_time_ms();
 	if (init_mutexes(data))
 		return (write(2,"Mutex initialization failed\n",28));
 	if (init_philos(data))

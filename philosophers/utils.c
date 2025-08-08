@@ -1,6 +1,6 @@
 #include "philosophers.h"
 
-long long	gtime_ms(void)
+long long	get_current_time_ms(void)
 {
 	struct timeval	tv;
     long long time_now;
