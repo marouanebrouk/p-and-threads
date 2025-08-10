@@ -13,6 +13,7 @@ void	cleanup(t_data *data)
 	}
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->meals_counter_mutex);
+	// pthread_mutex_destroy(&data->someone);
 	free(data->forks);
 	free(data->philos);
 }

@@ -2,13 +2,6 @@
 
 
 
-
-
-
-
-
-
-
 static void join_all(t_data *data)
 {
 	int i;
@@ -32,7 +25,6 @@ int main(int ac, char **av)
 	if(thread_creation(&data))
 		cleanup(&data);
 	join_all(&data);
-	printf("all threads JOINED successfully \n");
 	cleanup(&data);
 	return (EXIT_SUCCESS);
 }

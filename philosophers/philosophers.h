@@ -33,6 +33,7 @@ typedef struct s_data
     long long       start_time;
     pthread_mutex_t *forks;
     pthread_mutex_t print;
+    pthread_mutex_t someone_mutex;
     pthread_mutex_t meals_counter_mutex;
     t_philo         *philos;
 }   t_data;
@@ -54,11 +55,10 @@ int thread_creation(t_data * data);
 void	print_action(t_philo *philo, char *msg);
 void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
-
-
-
-
-
+int	check_death(t_philo *philo);
+int	check_all_ate(t_data *data);
+void	*monitor_routine(void *arg);
+void	release_forks(t_philo *philo);
 
 
 #endif

@@ -2,7 +2,6 @@
 
 
 
-
 void	print_action(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->data->print);
@@ -10,9 +9,6 @@ void	print_action(t_philo *philo, char *msg)
 		printf("%lld %d %s\n", get_current_time_ms() - philo->data->start_time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->print);
 }
-
-
-
 
 
 void	take_forks(t_philo *philo)
@@ -36,26 +32,26 @@ void	take_forks(t_philo *philo)
 
 
 
-static void	release_forks(t_philo *philo)
+void	release_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-
-
-
 void	eat(t_philo *philo)
 {
 	take_forks(philo);
 	print_action(philo, "is eating");
-
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal_time = get_current_time_ms();
+	pthread_mutex_unlock(&philo->meal_lock);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_lock);
-
 	// smart_sleep(philo->data->time_to_eat, philo->data);
-	usleep(philo->data->time_to_eat * 1000);
+	if (philo->data->time_to_eat > philo->data->time_to_die) // this if condition is for (10 400 100000000 100) to sleep the smallest one of them to die and exit the simulation
+		usleep(philo->data->time_to_die * 1000);
+	else
+		usleep(philo->data->time_to_eat * 1000);
 	release_forks(philo);
 }

@@ -1,15 +1,30 @@
 #include "philosophers.h"
 
 
+
+
+
 void	ft_sleep(long duration, t_data *data)
 {
 	long	start;
 
 	start = get_current_time_ms();
 	while (!data->someone_died && (get_current_time_ms() - start) < duration)
-		usleep(100); // check every 100us
+		usleep(100);
 }
 
+
+void deal_with_one_philo(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	print_action(philo,"has taken a fork");
+	usleep(1000 * philo->data->time_to_die);
+	print_action(philo,"is diedd");
+	// philo->data->someone_died = 1;
+	pthread_mutex_unlock(philo->left_fork);
+	// release_forks(philo);
+	return;
+}
 
 
 void	*philo_routine(void *arg)
@@ -18,19 +33,25 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(100); // sleep even to enhance synchro
-
-	while (!philo->data->someone_died)
+		usleep(500);
+	if (philo->data->philo_nb == 1)
+		deal_with_one_philo(philo);
+	// pthread_mutex_lock(&philo->data->someone);
+	while (!philo->data->someone_died && philo->data->philo_nb != 1)
 	{
+		print_action(philo, "is thinking");
+		usleep(1000);
 		eat(philo);
 		print_action(philo, "is sleeping");
 		// ft_sleep(philo->data->time_to_sleep, philo->data);
-		usleep(philo->data->time_to_sleep * 1000);
-		print_action(philo, "is thinking");
+		if (philo->data->time_to_sleep > philo->data->time_to_die)
+			usleep(philo->data->time_to_die * 1000);
+		else
+			usleep(philo->data->time_to_sleep * 1000);
 	}
+	// pthread_mutex_unlock(&philo->data->someone);
 	return (NULL);
 }
-
 
 
 
@@ -43,13 +64,15 @@ int	check_death(t_philo *philo)
 
 	pthread_mutex_lock(&philo->meal_lock);
 	current_time = get_current_time_ms();
-	if (current_time - philo->last_meal_time >= philo->data->time_to_die)
+	if (current_time - philo->last_meal_time >= philo->data->time_to_die) //checks if last_meal time passed and excceded time_to_die
 	{
 		pthread_mutex_lock(&philo->data->print);
 		if (!philo->data->someone_died)
 		{
 			printf("%lld %d died\n", current_time - philo->data->start_time, philo->id);
+			pthread_mutex_lock(&philo->data->someone_mutex);
 			philo->data->someone_died = 1;
+			pthread_mutex_unlock(&philo->data->someone_mutex);
 		}
 		pthread_mutex_unlock(&philo->data->print);
 		pthread_mutex_unlock(&philo->meal_lock);
@@ -77,9 +100,9 @@ int	check_all_ate(t_data *data)
 	pthread_mutex_unlock(&data->meals_counter_mutex);
 	if (full_count == data->philo_nb)
 	{
-		pthread_mutex_lock(&data->print);
-		data->someone_died = 1; // use same flag to stop everything
-		pthread_mutex_unlock(&data->print);
+		// pthread_mutex_lock(&data->print);
+		data->someone_died = 1;
+		// pthread_mutex_unlock(&data->print);
 		return (1);
 	}
 	return (0);
@@ -93,29 +116,23 @@ void	*monitor_routine(void *arg)
 {
 	t_data	*data = (t_data *)arg;
 	int		i;
-
+	// pthread_mutex_lock(&data->someone);
 	while (!data->someone_died)
 	{
 		i = 0;
 		while (i < data->philo_nb)
 		{
 			if (check_death(&data->philos[i]))
-				return (NULL);
+				return (NULL); // pthread_mutex_unlock(&data->someone)
 			i++;
 		}
 		if (data->meals_nb != -1 && check_all_ate(data))
-			return (NULL);
-		usleep(1000); // avoid busy waiting
+		return (NULL);
+		usleep(500);
 	}
+	// pthread_mutex_unlock(&data->someone);
 	return (NULL);
 }
-
-
-
-
-
-
-
 
 
 
@@ -137,11 +154,14 @@ int	thread_creation(t_data *data)
 		}
 		i++;
 	}
-	if (pthread_create(&monitor, NULL, monitor_routine, data) != 0)
+	if (data->philo_nb > 1)
 	{
-		write(2,"monitor thread creation failed\n", 31);
-		return (1);
+		if (pthread_create(&monitor, NULL, monitor_routine, data) != 0)
+		{
+			write(2,"monitor thread creation failed\n", 31);
+			return (1);
+		}
+		pthread_join(monitor, NULL); // wail till end of simulation
 	}
-	pthread_join(monitor, NULL); // wait until simulation ends
 	return (0);
 }
