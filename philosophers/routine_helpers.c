@@ -4,9 +4,12 @@
 
 void	print_action(t_philo *philo, char *msg)
 {
+	int passed_time;
+
+	passed_time = get_current_time_ms() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->print);
 	if (!philo->data->someone_died)
-		printf("%lld %d %s\n", get_current_time_ms() - philo->data->start_time, philo->id, msg);
+		printf("%lld %d %s\n", passed_time ,philo->id, msg);
 	pthread_mutex_unlock(&philo->data->print);
 }
 
