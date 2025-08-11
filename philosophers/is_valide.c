@@ -29,12 +29,15 @@ int ft_atoi(char *str)
             sign = -1;
     while (*str >= '0' && *str <= '9')
         result = result * 10 + (*str++ - '0');
+	// if (result * sign < 0)
+	// 	return (-1);
     return(result * sign);
 }
 
 int	ft_isnot_valid_args(int ac, char **av)
 {
 	int	i;
+	// int num;
 
     i = 1;
 	if (ac != 5 && ac != 6)
@@ -44,11 +47,14 @@ int	ft_isnot_valid_args(int ac, char **av)
 	}
 	while (i < ac)
 	{
-		if (!ft_is_digit(av[i]) || ft_atoi(av[i]) <= 0)
-		{
-			write(2, "Error: invalid argument value\n", 30);
-			return (1);
-		}
+		// num = ft_atoi(av[i]);
+		// printf("vaaaaaa %d \n",ft_atoi(av[1]));
+		if(!ft_is_digit(av[i]))
+			return (write(2, "Error: invalid argument value\n", 30));
+		if (i == 1 && ft_atoi(av[1]) > 200)
+			return(write(2, "Error : Num of max philo is 200\n", 32));
+		if (ft_atoi(av[i]) < 0)
+			return (write(2, "Error: invalid argument value\n", 30));
 		i++;
 	}
 	return (0);

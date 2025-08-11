@@ -21,7 +21,7 @@ int main(int ac, char **av)
 	if(ft_isnot_valid_args(ac, av))
 		return (EXIT_FAILURE);
 	if(init_all(&data, ac,av))
-		return (EXIT_FAILURE);
+		return (cleanup(&data),1);
 	if(thread_creation(&data))
 		cleanup(&data);
 	join_all(&data);

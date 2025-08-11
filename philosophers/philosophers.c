@@ -1,9 +1,6 @@
 #include "philosophers.h"
 
 
-
-
-
 void	ft_sleep(long duration, t_data *data)
 {
 	long	start;
@@ -19,11 +16,10 @@ void deal_with_one_philo(t_philo *philo)
 	pthread_mutex_lock(philo->left_fork);
 	print_action(philo,"has taken a fork");
 	usleep(1000 * philo->data->time_to_die);
-	print_action(philo,"is diedd");
+	print_action(philo,"is died");
 	// philo->data->someone_died = 1;
 	pthread_mutex_unlock(philo->left_fork);
 	// release_forks(philo);
-	return;
 }
 
 
