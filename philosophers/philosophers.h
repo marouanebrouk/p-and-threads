@@ -54,7 +54,7 @@ int	init_mutexes(t_data *data);
 int thread_creation(t_data * data);
 void	print_action(t_philo *philo, char *msg);
 void	take_forks(t_philo *philo);
-void	eat(t_philo *philo);
+int	eat(t_philo *philo);
 int	check_death(t_philo *philo);
 int	check_if_all_ate(t_data *data);
 void	*monitor_routine(void *arg);

@@ -34,7 +34,10 @@ void	*philo_routine(void *arg)
 	{
 		print_action(philo, "is thinking");
 		usleep(1000);
-		eat(philo);
+		if(eat(philo))
+		{
+			return(NULL);
+		}
 		print_action(philo, "is sleeping");
 		// ft_sleep(philo->data->time_to_sleep, philo->data);
 		if (philo->data->time_to_sleep > philo->data->time_to_die)
@@ -102,22 +105,23 @@ int	check_if_all_ate(t_data *data)
 
 
 
-int is_someone_dead(t_data *data)
-{
-	int	flag;
+// int is_someone_dead(t_data *data)
+// {
+// 	int	flag;
 
-	pthread_mutex_lock(&data->someone_mutex);
-	flag = data->someone_died;
-	pthread_mutex_unlock(&data->someone_mutex);
-	return (flag);
-}
+// 	flag = 0;
+// 	pthread_mutex_lock(&data->someone_mutex);
+// 	flag = data->someone_died;
+// 	pthread_mutex_unlock(&data->someone_mutex);
+// 	return (flag);
+// }
 
 void	*monitor_routine(void *arg)
 {
 	t_data	*data = (t_data *)arg;
 	int		i;
 	// pthread_mutex_lock(&data->someone);
-	while (!is_someone_dead(data))
+	while (!data->someone_died)
 	{
 		i = 0;
 		while (i < data->philo_nb)
