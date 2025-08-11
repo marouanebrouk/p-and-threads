@@ -79,26 +79,26 @@ int	check_death(t_philo *philo)
 }
 
 
-int	check_all_ate(t_data *data)
+int	check_if_all_ate(t_data *data)
 {
 	int	i;
-	int	full_count;
+	int	full_philo;
 
 	i = 0;
-	full_count = 0;
-	pthread_mutex_lock(&data->meals_counter_mutex);
+	full_philo = 0;
 	while (i < data->philo_nb)
 	{
+		pthread_mutex_lock(&data->meals_counter_mutex);
 		if (data->philos[i].meals_eaten >= data->meals_nb)
-			full_count++;
+			full_philo++;
+		pthread_mutex_unlock(&data->meals_counter_mutex);
 		i++;
 	}
-	pthread_mutex_unlock(&data->meals_counter_mutex);
-	if (full_count == data->philo_nb)
+	if (full_philo >= data->philo_nb)
 	{
-		// pthread_mutex_lock(&data->print);
+		pthread_mutex_lock(&data->someone_mutex);
 		data->someone_died = 1;
-		// pthread_mutex_unlock(&data->print);
+		pthread_mutex_unlock(&data->someone_mutex);
 		return (1);
 	}
 	return (0);
@@ -106,14 +106,22 @@ int	check_all_ate(t_data *data)
 
 
 
+int is_someone_dead(t_data *data)
+{
+	int	flag;
 
+	pthread_mutex_lock(&data->someone_mutex);
+	flag = data->someone_died;
+	pthread_mutex_unlock(&data->someone_mutex);
+	return (flag);
+}
 
 void	*monitor_routine(void *arg)
 {
 	t_data	*data = (t_data *)arg;
 	int		i;
 	// pthread_mutex_lock(&data->someone);
-	while (!data->someone_died)
+	while (!is_someone_dead(data))
 	{
 		i = 0;
 		while (i < data->philo_nb)
@@ -122,8 +130,8 @@ void	*monitor_routine(void *arg)
 				return (NULL); // pthread_mutex_unlock(&data->someone)
 			i++;
 		}
-		if (data->meals_nb != -1 && check_all_ate(data))
-		return (NULL);
+		if (data->meals_nb != -1 && check_if_all_ate(data))
+			return (NULL);
 		usleep(500);
 	}
 	// pthread_mutex_unlock(&data->someone);

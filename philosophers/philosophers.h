@@ -56,7 +56,7 @@ void	print_action(t_philo *philo, char *msg);
 void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
 int	check_death(t_philo *philo);
-int	check_all_ate(t_data *data);
+int	check_if_all_ate(t_data *data);
 void	*monitor_routine(void *arg);
 void	release_forks(t_philo *philo);
 
