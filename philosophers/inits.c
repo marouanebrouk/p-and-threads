@@ -60,7 +60,11 @@ int	init_all(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->meals_nb = -1;
 	if (argc == 6)
+	{
+		if (ft_atoi(argv[5]) == 0)
+			return (write(2,"argument 6 need to be more than 0\n",35),1);
 		data->meals_nb = ft_atoi(argv[5]);
+	}
 	data->someone_died = 0;
 	data->start_time = get_current_time_ms();
 	if (data->start_time == 0)

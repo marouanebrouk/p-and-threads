@@ -4,7 +4,7 @@
 
 void	print_action(t_philo *philo, char *msg)
 {
-	int passed_time;
+	long long passed_time;
 
 	passed_time = get_current_time_ms() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->print);

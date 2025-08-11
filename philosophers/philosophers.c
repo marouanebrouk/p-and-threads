@@ -17,9 +17,7 @@ void deal_with_one_philo(t_philo *philo)
 	print_action(philo,"has taken a fork");
 	usleep(1000 * philo->data->time_to_die);
 	print_action(philo,"is died");
-	// philo->data->someone_died = 1;
 	pthread_mutex_unlock(philo->left_fork);
-	// release_forks(philo);
 }
 
 
@@ -32,7 +30,6 @@ void	*philo_routine(void *arg)
 		usleep(500);
 	if (philo->data->philo_nb == 1)
 		deal_with_one_philo(philo);
-	// pthread_mutex_lock(&philo->data->someone);
 	while (!philo->data->someone_died && philo->data->philo_nb != 1)
 	{
 		print_action(philo, "is thinking");
@@ -45,7 +42,6 @@ void	*philo_routine(void *arg)
 		else
 			usleep(philo->data->time_to_sleep * 1000);
 	}
-	// pthread_mutex_unlock(&philo->data->someone);
 	return (NULL);
 }
 
