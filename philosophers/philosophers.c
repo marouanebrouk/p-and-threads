@@ -10,7 +10,6 @@ void	ft_sleep(long duration, t_data *data)
 		usleep(200);
 }
 
-
 void ft_think(t_philo *philo)
 {
     print_action(philo, "is thinking");
@@ -20,7 +19,6 @@ void ft_think(t_philo *philo)
         usleep(1000);
 }
 
-
 void deal_with_one_philo(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
@@ -29,7 +27,6 @@ void deal_with_one_philo(t_philo *philo)
 	print_action(philo,"is died");
 	pthread_mutex_unlock(philo->left_fork);
 }
-
 
 void	*philo_routine(void *arg)
 {
@@ -56,11 +53,6 @@ void	*philo_routine(void *arg)
 	return (NULL);
 }
 
-
-
-
-
-
 int	check_death(t_philo *philo)
 {
 	long	current_time;
@@ -84,7 +76,6 @@ int	check_death(t_philo *philo)
 	pthread_mutex_unlock(&philo->meal_lock);
 	return (0);
 }
-
 
 int	check_if_all_ate(t_data *data)
 {
@@ -110,9 +101,6 @@ int	check_if_all_ate(t_data *data)
 	}
 	return (0);
 }
-
-
-
 
 void	*monitor_routine(void *arg)
 {
