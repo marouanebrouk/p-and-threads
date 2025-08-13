@@ -6,8 +6,18 @@ void	ft_sleep(long duration, t_data *data)
 	long	start;
 
 	start = get_current_time_ms();
-	while (!data->someone_died && (get_current_time_ms() - start) < duration)
-		usleep(100);
+	while (!did_someone_die(data) && (get_current_time_ms() - start) < duration)
+		usleep(200);
+}
+
+
+void ft_think(t_philo *philo)
+{
+    print_action(philo, "is thinking");
+    if (philo->data->philo_nb % 2 && philo->data->time_to_eat >= philo->data->time_to_sleep)
+        usleep(philo->data->time_to_eat * 1000);
+    else
+        usleep(1000);
 }
 
 
@@ -26,18 +36,16 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->id % 2 == 0)
-		usleep(500);
 	if (philo->data->philo_nb == 1)
 		deal_with_one_philo(philo);
-	while (!philo->data->someone_died && philo->data->philo_nb != 1)
+	while (!did_someone_die(philo->data) && philo->data->philo_nb != 1)
 	{
-		print_action(philo, "is thinking");
-		usleep(1000);
+		if (philo->id % 2 == 0)
+			usleep(500);
+		ft_think(philo);
+		usleep(1000 );
 		if(eat(philo))
-		{
 			return(NULL);
-		}
 		print_action(philo, "is sleeping");
 		// ft_sleep(philo->data->time_to_sleep, philo->data);
 		if (philo->data->time_to_sleep > philo->data->time_to_die)
@@ -57,12 +65,12 @@ int	check_death(t_philo *philo)
 {
 	long	current_time;
 
-	pthread_mutex_lock(&philo->meal_lock);
 	current_time = get_current_time_ms();
-	if (current_time - philo->last_meal_time >= philo->data->time_to_die) //checks if last_meal time passed and excceded time_to_die
+	pthread_mutex_lock(&philo->meal_lock);
+	if (current_time - philo->last_meal_time >= philo->data->time_to_die)
 	{
 		pthread_mutex_lock(&philo->data->print);
-		if (!philo->data->someone_died)
+		if (!did_someone_die(philo->data))
 		{
 			printf("%lld %d died\n", current_time - philo->data->start_time, philo->id);
 			pthread_mutex_lock(&philo->data->someone_mutex);
@@ -87,10 +95,10 @@ int	check_if_all_ate(t_data *data)
 	full_philo = 0;
 	while (i < data->philo_nb)
 	{
-		pthread_mutex_lock(&data->meals_counter_mutex);
+		pthread_mutex_lock(&data->philos[i].meal_lock);
 		if (data->philos[i].meals_eaten >= data->meals_nb)
 			full_philo++;
-		pthread_mutex_unlock(&data->meals_counter_mutex);
+		pthread_mutex_unlock(&data->philos[i].meal_lock);
 		i++;
 	}
 	if (full_philo >= data->philo_nb)
@@ -105,36 +113,26 @@ int	check_if_all_ate(t_data *data)
 
 
 
-// int is_someone_dead(t_data *data)
-// {
-// 	int	flag;
-
-// 	flag = 0;
-// 	pthread_mutex_lock(&data->someone_mutex);
-// 	flag = data->someone_died;
-// 	pthread_mutex_unlock(&data->someone_mutex);
-// 	return (flag);
-// }
 
 void	*monitor_routine(void *arg)
 {
-	t_data	*data = (t_data *)arg;
 	int		i;
-	// pthread_mutex_lock(&data->someone);
-	while (!data->someone_died)
+	t_data	*data;
+
+	data = (t_data *)arg;
+	while (!did_someone_die(data))
 	{
 		i = 0;
 		while (i < data->philo_nb)
 		{
 			if (check_death(&data->philos[i]))
-				return (NULL); // pthread_mutex_unlock(&data->someone)
+				return (NULL);
 			i++;
 		}
 		if (data->meals_nb != -1 && check_if_all_ate(data))
 			return (NULL);
 		usleep(500);
 	}
-	// pthread_mutex_unlock(&data->someone);
 	return (NULL);
 }
 

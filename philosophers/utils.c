@@ -14,3 +14,14 @@ long long	get_current_time_ms(void)
     time_now = (tv.tv_sec * 1000) + (tv.tv_usec / 1000); 
 	return (time_now);
 }
+
+int did_someone_die(t_data *data)
+{
+    int ret;
+
+    ret = 0;
+    pthread_mutex_lock(&data->someone_mutex);
+    ret = data->someone_died;
+    pthread_mutex_unlock(&data->someone_mutex);
+    return (ret);
+}

@@ -37,7 +37,6 @@ int ft_atoi(char *str)
 int	ft_isnot_valid_args(int ac, char **av)
 {
 	int	i;
-	// int num;
 
     i = 1;
 	if (ac != 5 && ac != 6)
@@ -47,8 +46,6 @@ int	ft_isnot_valid_args(int ac, char **av)
 	}
 	while (i < ac)
 	{
-		// num = ft_atoi(av[i]);
-		// printf("vaaaaaa %d \n",ft_atoi(av[1]));
 		if(!ft_is_digit(av[i]))
 			return (write(2, "Error: invalid argument value\n", 30));
 		if (i == 1 && ft_atoi(av[1]) > 200)

@@ -15,10 +15,11 @@ typedef struct s_philo
     int             id;
     pthread_t       thread;
     int             meals_eaten;
-    long long       last_meal_time;
+    _Atomic long long   last_meal_time;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     pthread_mutex_t meal_lock;
+    pthread_mutex_t meal_time_lock;
     t_data         *data;
 }   t_philo;
 
@@ -34,16 +35,11 @@ typedef struct s_data
     pthread_mutex_t *forks;
     pthread_mutex_t print;
     pthread_mutex_t someone_mutex;
-    pthread_mutex_t meals_counter_mutex;
     t_philo         *philos;
 }   t_data;
 
 int     ft_isnot_valid_args(int ac, char **av);
-int	ft_init_data(t_data *data, int ac, char **av);
 int ft_atoi(char *str);
-int	ft_init_philosophers(t_data *data);
-void	*ft_routine(void *arg);
-
 void	print_action(t_philo *philo, char *action);
 long long	get_current_time_ms(void);
 
@@ -59,6 +55,9 @@ int	check_death(t_philo *philo);
 int	check_if_all_ate(t_data *data);
 void	*monitor_routine(void *arg);
 void	release_forks(t_philo *philo);
+int did_someone_die(t_data *data);
+int init_data(t_data *data,int ac, char **av);
+
 
 
 #endif
