@@ -15,11 +15,11 @@ typedef struct s_philo
     int             id;
     pthread_t       thread;
     int             meals_eaten;
-    _Atomic long long   last_meal_time;
+    long long   last_meal_time;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     pthread_mutex_t meal_lock;
-    pthread_mutex_t meal_time_lock;
+    // pthread_mutex_t meal_time_lock;
     t_data         *data;
 }   t_philo;
 

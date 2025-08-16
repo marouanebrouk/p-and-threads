@@ -31,7 +31,7 @@ int main(int ac, char **av)
 	if(init_philos(data))
 		return(cleanup(data),1);
 	if(thread_creation(data))
-		cleanup(data);
+		return(cleanup(data),1);
 	join_all(data);
 	cleanup(data);
 	return (EXIT_SUCCESS);

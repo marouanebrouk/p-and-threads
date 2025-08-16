@@ -1,9 +1,0 @@
-What we did:
-
-Initialized philosopher structs with IDs, fork pointers, and data
-
-Created a thread per philosopher
-
-Launched them with a routine()
-
-Waited for them with pthread_join

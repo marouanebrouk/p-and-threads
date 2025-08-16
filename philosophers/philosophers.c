@@ -12,11 +12,10 @@ void	ft_sleep(long duration, t_data *data)
 
 void ft_think(t_philo *philo)
 {
-    print_action(philo, "is thinking");
-    if (philo->data->philo_nb % 2 && philo->data->time_to_eat >= philo->data->time_to_sleep)
-        usleep(philo->data->time_to_eat * 1000);
-    else
-        usleep(1000);
+	if (philo->data->philo_nb % 2 != 0 && philo->data->time_to_eat >= philo->data->time_to_sleep)
+		usleep(philo->data->time_to_eat * 1000);
+	else
+    	usleep(1000*5);
 }
 
 void deal_with_one_philo(t_philo *philo)
@@ -35,20 +34,16 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->data->philo_nb == 1)
 		deal_with_one_philo(philo);
+	if (philo->id % 2 == 0)
+		usleep(1000*20);
 	while (!did_someone_die(philo->data) && philo->data->philo_nb != 1)
 	{
-		if (philo->id % 2 == 0)
-			usleep(500);
-		ft_think(philo);
-		usleep(1000 );
 		if(eat(philo))
 			return(NULL);
 		print_action(philo, "is sleeping");
-		// ft_sleep(philo->data->time_to_sleep, philo->data);
-		if (philo->data->time_to_sleep > philo->data->time_to_die)
-			usleep(philo->data->time_to_die * 1000);
-		else
-			usleep(philo->data->time_to_sleep * 1000);
+		ft_sleep(philo->data->time_to_sleep,philo->data);
+		print_action(philo, "is thinking");
+		ft_think(philo);
 	}
 	return (NULL);
 }
@@ -119,7 +114,7 @@ void	*monitor_routine(void *arg)
 		}
 		if (data->meals_nb != -1 && check_if_all_ate(data))
 			return (NULL);
-		usleep(500);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -132,6 +127,7 @@ int	thread_creation(t_data *data)
 {
 	int	i;
 	pthread_t monitor;
+
 	i = 0;
 	while (i < data->philo_nb)
 	{
@@ -139,7 +135,7 @@ int	thread_creation(t_data *data)
 		{
 			write(2,"thread creation failed\n", 23);
 			while (--i >= 0)
-				pthread_detach(data->philos[i].thread);
+				pthread_join(data->philos[i].thread,NULL);
 			return (1);
 		}
 		i++;
@@ -151,7 +147,7 @@ int	thread_creation(t_data *data)
 			write(2,"monitor thread creation failed\n", 31);
 			return (1);
 		}
-		pthread_join(monitor, NULL); // wail till end of simulation
+		pthread_join(monitor, NULL);
 	}
 	return (0);
 }

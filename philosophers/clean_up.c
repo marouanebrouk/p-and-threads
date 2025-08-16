@@ -10,8 +10,8 @@ void	cleanup(t_data *data)
 		while (i < data->philo_nb)
 		{
 			pthread_mutex_destroy(&data->forks[i]);
-			// pthread_mutex_destroy(&data->philos[i].meal_lock);
-			pthread_mutex_destroy(&data->philos[i].meal_time_lock);
+			pthread_mutex_destroy(&data->philos[i].meal_lock);
+			// pthread_mutex_destroy(&data->philos[i].meal_time_lock);
 			i++;
 		}
 		pthread_mutex_destroy(&data->print);
