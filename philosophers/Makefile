@@ -1,16 +1,16 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c clean_up.c inits.c is_valide.c philosophers.c utils.c routine_helpers.c
+SRCS = main.c clean_up.c inits.c is_valide.c philosophers.c utils.c routine_helpers.c monitor_helpers.c
 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -g $(CFLAGS) -o $(NAME)
+	$(CC) $(OBJS) $(CFLAGS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)

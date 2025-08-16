@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routine_helpers.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbrouk <mbrouk@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/16 17:21:03 by mbrouk            #+#    #+#             */
+/*   Updated: 2025/08/16 17:21:32 by mbrouk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-void print_action(t_philo *philo, char *msg)
+#include "philosophers.h"
+
+void	print_action(t_philo *philo, char *msg)
 {
-	long long passed_time;
+	long long	passed_time;
 
 	pthread_mutex_lock(&philo->data->print);
 	if (!did_someone_die(philo->data))
@@ -13,7 +27,7 @@ void print_action(t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->data->print);
 }
 
-void release_forks(t_philo *philo)
+void	release_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);

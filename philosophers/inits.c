@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   inits.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbrouk <mbrouk@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/16 17:17:52 by mbrouk            #+#    #+#             */
+/*   Updated: 2025/08/16 17:18:00 by mbrouk           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
-
-
 
 int	init_mutexes(t_data *data)
 {
@@ -22,8 +32,6 @@ int	init_mutexes(t_data *data)
 	}
 	return (0);
 }
-
-
 
 int	init_philos(t_data *data)
 {
@@ -50,8 +58,7 @@ int	init_philos(t_data *data)
 	return (0);
 }
 
-
-int init_data(t_data *data, int argc, char **argv)
+int	init_data(t_data *data, int argc, char **argv)
 {
 	data->philo_nb = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
@@ -61,10 +68,10 @@ int init_data(t_data *data, int argc, char **argv)
 	if (argc == 6)
 	{
 		if (ft_atoi(argv[5]) == 0)
-			return (write(2,"Argument 6 need to be more than 0\n",35),1);
+			return (write(2, "Argument 6 need to be more than 0\n", 35), 1);
 		data->meals_nb = ft_atoi(argv[5]);
 	}
 	data->someone_died = 0;
 	data->start_time = get_current_time_ms();
-	return 0;
+	return (0);
 }
